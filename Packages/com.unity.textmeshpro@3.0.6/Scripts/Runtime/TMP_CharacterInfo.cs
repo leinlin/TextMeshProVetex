@@ -11,6 +11,8 @@ namespace TMPro
         public Vector2 uv2;
         public Vector2 uv4;
         public Color32 color;
+        public Vector4 outLineColor;
+        public Vector3 normal; // 这里存储的是 x = softness y = dilate z = thickness
 
         public static TMP_Vertex zero { get { return k_Zero; } }
 

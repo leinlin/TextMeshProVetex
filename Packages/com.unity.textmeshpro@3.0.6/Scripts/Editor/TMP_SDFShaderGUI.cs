@@ -59,32 +59,32 @@ namespace TMPro.EditorUtilities
 
         protected override void DoGUI()
         {
-            s_Face = BeginPanel("Face", s_Face);
-            if (s_Face)
-            {
-                DoFacePanel();
-            }
+            //s_Face = BeginPanel("Face", s_Face);
+            //if (s_Face)
+            //{
+            //    DoFacePanel();
+            //}
 
-            EndPanel();
+            //EndPanel();
 
-            s_Outline = m_Material.HasProperty(ShaderUtilities.ID_OutlineTex) ? BeginPanel("Outline", s_Outline) : BeginPanel("Outline", s_OutlineFeature, s_Outline);
-            if (s_Outline)
-            {
-                DoOutlinePanel();
-            }
+            //s_Outline = m_Material.HasProperty(ShaderUtilities.ID_OutlineTex) ? BeginPanel("Outline", s_Outline) : BeginPanel("Outline", s_OutlineFeature, s_Outline);
+            //if (s_Outline)
+            //{
+            //    DoOutlinePanel();
+            //}
 
-            EndPanel();
+            //EndPanel();
 
-            if (m_Material.HasProperty(ShaderUtilities.ID_Outline2Color))
-            {
-                s_Outline2 = BeginPanel("Outline 2", s_OutlineFeature, s_Outline2);
-                if (s_Outline2)
-                {
-                    DoOutline2Panel();
-                }
+            //if (m_Material.HasProperty(ShaderUtilities.ID_Outline2Color))
+            //{
+            //    s_Outline2 = BeginPanel("Outline 2", s_OutlineFeature, s_Outline2);
+            //    if (s_Outline2)
+            //    {
+            //        DoOutline2Panel();
+            //    }
 
-                EndPanel();
-            }
+            //    EndPanel();
+            //}
 
             if (m_Material.HasProperty(ShaderUtilities.ID_UnderlayColor))
             {

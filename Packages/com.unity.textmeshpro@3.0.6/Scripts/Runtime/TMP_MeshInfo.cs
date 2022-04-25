@@ -16,8 +16,8 @@ namespace TMPro
     public struct TMP_MeshInfo
     {
         private static readonly Color32 s_DefaultColor = new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
-        private static readonly Vector3 s_DefaultNormal = new Vector3(0.0f, 0.0f, -1f);
-        private static readonly Vector4 s_DefaultTangent = new Vector4(-1f, 0.0f, 0.0f, 1f);
+        private static readonly Vector3 s_DefaultNormal = new Vector3(0.0f, 0.0f, 0.0f);
+        private static readonly Vector4 s_DefaultTangent = new Vector4(1.0f, 0.0f, 1.0f, 1f);
         private static readonly Bounds s_DefaultBounds = new Bounds();
 
         public Mesh mesh;

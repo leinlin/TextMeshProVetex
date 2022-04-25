@@ -33,6 +33,12 @@ namespace TMPro.EditorUtilities
 
         static readonly GUIContent k_ColorModeLabel = new GUIContent("Color Mode", "The type of gradient to use.");
         static readonly GUIContent k_BaseColorLabel = new GUIContent("Vertex Color", "The base color of the text vertices.");
+        static readonly GUIContent k_OutLineColorLabel = new GUIContent("OutLine Color", "The base color of the text vertices.");
+
+        static readonly GUIContent k_SoftNessLabel = new GUIContent("SoftNess width", "");
+        static readonly GUIContent k_DilateLabel = new GUIContent("Dilate width", "");
+        static readonly GUIContent k_ThickNessLabel = new GUIContent("ThickNess width", "");
+
         static readonly GUIContent k_ColorPresetLabel = new GUIContent("Color Preset", "A Color Preset which override the local color settings.");
         static readonly GUIContent k_ColorGradientLabel = new GUIContent("Color Gradient", "The gradient color applied over the Vertex Color. Can be locally set or driven by a Gradient Asset.");
         static readonly GUIContent k_CorenerColorsLabel = new GUIContent("Colors", "The color composition of the gradient.");
@@ -111,6 +117,11 @@ namespace TMPro.EditorUtilities
         protected SerializedProperty m_FontStyleProp;
 
         protected SerializedProperty m_FontColorProp;
+        protected SerializedProperty m_OutlineColorProp;
+        protected SerializedProperty m_SoftNessProp;
+        protected SerializedProperty m_DilateProp;
+        protected SerializedProperty m_ThickNessProp;
+
         protected SerializedProperty m_EnableVertexGradientProp;
         protected SerializedProperty m_FontColorGradientProp;
         protected SerializedProperty m_FontColorGradientPresetProp;
@@ -201,6 +212,12 @@ namespace TMPro.EditorUtilities
 
             // Colors & Gradient
             m_FontColorProp = serializedObject.FindProperty("m_fontColor");
+            m_OutlineColorProp = serializedObject.FindProperty("m_outlineColor");
+
+            m_SoftNessProp = serializedObject.FindProperty("m_softNess");
+            m_DilateProp = serializedObject.FindProperty("m_dilate");
+            m_ThickNessProp = serializedObject.FindProperty("m_thickNess");
+
             m_EnableVertexGradientProp = serializedObject.FindProperty("m_enableVertexGradient");
             m_FontColorGradientProp = serializedObject.FindProperty("m_fontColorGradient");
             m_FontColorGradientPresetProp = serializedObject.FindProperty("m_fontColorGradientPreset");
@@ -789,6 +806,12 @@ namespace TMPro.EditorUtilities
             // FACE VERTEX COLOR
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(m_FontColorProp, k_BaseColorLabel);
+            EditorGUILayout.PropertyField(m_OutlineColorProp, k_OutLineColorLabel);
+
+            EditorGUILayout.PropertyField(m_SoftNessProp, k_SoftNessLabel);
+            EditorGUILayout.PropertyField(m_DilateProp, k_DilateLabel);
+            EditorGUILayout.PropertyField(m_ThickNessProp, k_ThickNessLabel);
+
             if (EditorGUI.EndChangeCheck())
             {
                 m_HavePropertiesChanged = true;

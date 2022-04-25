@@ -407,41 +407,20 @@ namespace TMPro
         [SerializeField]
         protected Color32 m_faceColor = Color.white;
 
+        [SerializeField]
+        protected Color32 m_outlineColor = Color.white;
 
-        /// <summary>
-        /// Sets the color of the _OutlineColor property of the assigned material. Changing outline color will result in an instance of the material.
-        /// </summary>
-        public Color32 outlineColor
-        {
-            get
-            {
-                if (m_sharedMaterial == null) return m_outlineColor;
+        [SerializeField]
+        [Range(0, 1)]
+        protected float m_softNess = 0.0f;
 
-                m_outlineColor = m_sharedMaterial.GetColor(ShaderUtilities.ID_OutlineColor);
-                return m_outlineColor;
-            }
+        [SerializeField]
+        [Range(-1, 1)]
+        protected float m_dilate = 0.0f;
 
-            set { if (m_outlineColor.Compare(value)) return; SetOutlineColor(value); m_havePropertiesChanged = true; m_outlineColor = value; SetVerticesDirty(); }
-        }
-        //[SerializeField]
-        protected Color32 m_outlineColor = Color.black;
-
-
-        /// <summary>
-        /// Sets the thickness of the outline of the font. Setting this value will result in an instance of the material.
-        /// </summary>
-        public float outlineWidth
-        {
-            get
-            {
-                if (m_sharedMaterial == null) return m_outlineWidth;
-
-                m_outlineWidth = m_sharedMaterial.GetFloat(ShaderUtilities.ID_OutlineWidth);
-                return m_outlineWidth;
-            }
-            set { if (m_outlineWidth == value) return; SetOutlineThickness(value); m_havePropertiesChanged = true; m_outlineWidth = value; SetVerticesDirty(); }
-        }
-        protected float m_outlineWidth = 0.0f;
+        [SerializeField]
+        [Range(0, 1)]
+        protected float m_thickNess = 0.0f;
 
 
         /// <summary>
@@ -5293,6 +5272,9 @@ namespace TMPro
             #region Setup Vertex Colors
             // Alpha is the lower of the vertex color or tag color alpha used.
             vertexColor.a = m_fontColor32.a < vertexColor.a ? m_fontColor32.a : vertexColor.a;
+            Color tmpOut = m_outlineColor;
+            Vector4 outlineColor = new Vector4(tmpOut.r, tmpOut.g, tmpOut.b, tmpOut.a);
+            Vector3 normal = new Vector3(m_softNess, m_dilate, m_thickNess);
 
             // Handle Vertex Colors & Vertex Color Gradient
             if (!m_enableVertexGradient)
@@ -5348,6 +5330,16 @@ namespace TMPro
                     m_textInfo.characterInfo[m_characterCount].vertex_BR.color = m_colorGradientPreset.bottomRight.MinAlpha(vertexColor);
                 }
             }
+
+            m_textInfo.characterInfo[m_characterCount].vertex_BL.outLineColor = outlineColor;
+            m_textInfo.characterInfo[m_characterCount].vertex_TL.outLineColor = outlineColor;
+            m_textInfo.characterInfo[m_characterCount].vertex_TR.outLineColor = outlineColor;
+            m_textInfo.characterInfo[m_characterCount].vertex_BR.outLineColor = outlineColor;
+
+            m_textInfo.characterInfo[m_characterCount].vertex_BL.normal = normal;
+            m_textInfo.characterInfo[m_characterCount].vertex_TL.normal = normal;
+            m_textInfo.characterInfo[m_characterCount].vertex_TR.normal = normal;
+            m_textInfo.characterInfo[m_characterCount].vertex_BR.normal = normal;
             #endregion
 
             // Apply style_padding only if this is a SDF Shader.
@@ -5547,6 +5539,16 @@ namespace TMPro
             m_textInfo.meshInfo[materialIndex].colors32[1 + index_X4] = characterInfoArray[i].vertex_TL.color;
             m_textInfo.meshInfo[materialIndex].colors32[2 + index_X4] = characterInfoArray[i].vertex_TR.color;
             m_textInfo.meshInfo[materialIndex].colors32[3 + index_X4] = characterInfoArray[i].vertex_BR.color;
+
+            m_textInfo.meshInfo[materialIndex].tangents[0 + index_X4] = characterInfoArray[i].vertex_BL.outLineColor;
+            m_textInfo.meshInfo[materialIndex].tangents[1 + index_X4] = characterInfoArray[i].vertex_TL.outLineColor;
+            m_textInfo.meshInfo[materialIndex].tangents[2 + index_X4] = characterInfoArray[i].vertex_TR.outLineColor;
+            m_textInfo.meshInfo[materialIndex].tangents[3 + index_X4] = characterInfoArray[i].vertex_BR.outLineColor;
+
+            m_textInfo.meshInfo[materialIndex].normals[0 + index_X4] = characterInfoArray[i].vertex_BL.normal;
+            m_textInfo.meshInfo[materialIndex].normals[1 + index_X4] = characterInfoArray[i].vertex_TL.normal;
+            m_textInfo.meshInfo[materialIndex].normals[2 + index_X4] = characterInfoArray[i].vertex_TR.normal;
+            m_textInfo.meshInfo[materialIndex].normals[3 + index_X4] = characterInfoArray[i].vertex_BR.normal;
 
             m_textInfo.meshInfo[materialIndex].vertexCount = index_X4 + 4;
         }
